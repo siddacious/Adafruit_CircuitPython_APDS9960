@@ -106,6 +106,7 @@ class APDS9960:
     _gesture_valid = RWBit(APDS9960_GSTATUS, 0)
     _gesture_mode = RWBit(APDS9960_GCONF4, 0)
     _proximity_persistance = RWBits(4, APDS9960_PERS, 4)
+    _power_on = RWBt(APDS9960_ENABLE, 0)
 
     def __init__(self,
                  i2c, *,
@@ -155,6 +156,14 @@ class APDS9960:
         self._saw_left_start = 0
         self._saw_right_start = 0
 
+    @property
+    def power_on(self):
+        """Controls the power status of the sensor. Set to False to disable the sensor and put it in a low-power state"""
+        return self._power_on
+
+    @power_on.setter
+    def power_on(self, value):
+        self._power_on = value
 
     enable = RWBit(APDS9960_ENABLE, 0)
     """Board enable.  True to enable, False to disable"""
